@@ -33,7 +33,7 @@ const storeExpense = () => {
     <Head title="支出登録" />
 
     <AuthenticatedLayout>
-        <div class="py-12">
+        <div class="py-10">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                   <section class="text-gray-600 body-font relative">

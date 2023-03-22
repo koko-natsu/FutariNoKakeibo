@@ -60,14 +60,21 @@ class ExpensesController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Expense $expense)
     {
-        
+        if($expense->isAuth($request))
+        {
+            $expense->fill($request->all())->save();
+        }
+
+        return to_route('expenses.index');
     }
 
 
-    public function destroy($id)
+    public function destroy(Expense $expense)
     {
-        //
+        $expense->delete();
+
+        
     }
 }
