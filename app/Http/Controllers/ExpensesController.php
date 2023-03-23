@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Expense;
 use Inertia\Inertia;
 use App\Http\Requests\StoreExpenseRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\UpdateExpenseRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -14,11 +14,11 @@ class ExpensesController extends Controller
 
     public function index()
     {
-        $expense = Expense::where('user_id', '=', Auth::id())
+        $expenses = Expense::where('user_id', '=', Auth::id())
             ->get();
 
         return Inertia::render('Expenses/Index', [
-            'expenses' => $expense,
+            'expenses' => $expenses,
         ]);
     }
 
@@ -60,7 +60,7 @@ class ExpensesController extends Controller
     }
 
 
-    public function update(Request $request, Expense $expense)
+    public function update(UpdateExpenseRequest $request, Expense $expense)
     {
         if($expense->isAuth($request))
         {
@@ -75,6 +75,6 @@ class ExpensesController extends Controller
     {
         $expense->delete();
 
-        
+        return to_route('expenses.index');
     }
 }

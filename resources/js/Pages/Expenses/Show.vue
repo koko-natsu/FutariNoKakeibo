@@ -23,7 +23,11 @@ const updateExpense = () => {
     Inertia.put(route('expenses.update', { expense: props.expense.id}), form)
 }
 
-
+const deleteExpense = id => {
+    Inertia.delete(route('expenses.destroy', { expense: id }), {
+        onBefore: () => confirm('本当に削除しますか？')
+    })
+}
 </script>
 
 <template>
@@ -34,10 +38,11 @@ const updateExpense = () => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <section class="text-gray-600 body-font relative">
-                        <form @submit.prevent="updateExpense">
+                        <button @click="deleteExpense(props.expense.id)" class="block ml-auto mr-10 mt-10">
                             <font-awesome-icon :icon="['fas', 'eraser']"
-                                size="2x"
-                                class="block ml-auto mr-10 mt-10"/>
+                                size="2x"/>
+                        </button>
+                        <form @submit.prevent="updateExpense">
                             <div class="container px-5 py-5 mx-auto flex sm:flex-nowrap flex-wrap">
                                 <div class="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto md:mr-auto w-full md:py-8 mt-8 md:mt-0">
                                     <h2 class="text-gray-900 text-lg mb-1 font-medium title-font">何を変更しますか?</h2>
