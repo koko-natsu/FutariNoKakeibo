@@ -13,7 +13,7 @@ class UpdateIncomeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class UpdateIncomeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'receive_date' => ['required', 'date'],
+            'title' => ['required', 'max:20'],
+            'price' => ['required', 'numeric'],
+            'memo' => ['max:255'],
         ];
     }
 }

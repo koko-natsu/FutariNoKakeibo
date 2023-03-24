@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Income;
 use App\Http\Requests\StoreIncomeRequest;
 use App\Http\Requests\UpdateIncomeRequest;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
-class IncomeController extends Controller
+class IncomesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +17,13 @@ class IncomeController extends Controller
      */
     public function index()
     {
-        //
+        $incomes = Income::where('user_id', '=', Auth::id())
+            ->orderBy('receive_date')
+            ->get();
+
+        return Inertia::render('Incomes/Index', [
+            'incomes' => $incomes,
+        ]);
     }
 
     /**
@@ -25,7 +33,9 @@ class IncomeController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Incomes/Create', [
+            'user_id' => Auth::id(),
+        ]);
     }
 
     /**
@@ -34,9 +44,14 @@ class IncomeController extends Controller
      * @param  \App\Http\Requests\StoreIncomeRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreIncomeRequest $request)
+    public function store(StoreIncomeRequest $request, Income $income)
     {
-        //
+        if($income->isAuth($request))
+        {
+            $income->fill($request->all())->save();
+        }
+
+        return to_route('incomes.index');
     }
 
     /**
@@ -58,7 +73,9 @@ class IncomeController extends Controller
      */
     public function edit(Income $income)
     {
-        //
+        return Inertia::render('Incomes/Edit', [
+            'income' => $income,
+        ]);
     }
 
     /**
@@ -70,7 +87,12 @@ class IncomeController extends Controller
      */
     public function update(UpdateIncomeRequest $request, Income $income)
     {
-        //
+        if($income->isAuth($request))
+        {
+            $income->fill($request->all())->save();
+        }
+
+        return to_route('incomes.index');
     }
 
     /**
@@ -81,6 +103,8 @@ class IncomeController extends Controller
      */
     public function destroy(Income $income)
     {
-        //
+        $income->delete();
+
+        return to_route('incomes.index');
     }
 }

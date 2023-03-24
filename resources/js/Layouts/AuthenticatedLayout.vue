@@ -31,9 +31,6 @@ const showingNavigationDropdown = ref(false);
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <!-- <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
-                                </NavLink> -->
                                 <button>
                                     <Dropdown align="center" width="48">
                                         <template #trigger>
@@ -44,10 +41,26 @@ const showingNavigationDropdown = ref(false);
                                             支出
                                             </button>
                                         </template>
-
                                         <template #content>
                                             <DropdownLink :href="route('expenses.index')">一覧</DropdownLink>
                                             <DropdownLink :href="route('expenses.create')">登録</DropdownLink>
+                                        </template>
+                                    </Dropdown>
+                                </button>
+
+                                <button>
+                                    <Dropdown align="center" width="48">
+                                        <template #trigger>
+                                            <button
+                                                type="button"
+                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-amber-400 focus:outline-none transition ease-in-out duration-150"
+                                            >
+                                            収入
+                                            </button>
+                                        </template>
+                                        <template #content>
+                                            <DropdownLink :href="route('incomes.index')">一覧</DropdownLink>
+                                            <DropdownLink :href="route('incomes.create')">登録</DropdownLink>
                                         </template>
                                     </Dropdown>
                                 </button>

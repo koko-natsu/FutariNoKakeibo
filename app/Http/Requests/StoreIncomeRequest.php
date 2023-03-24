@@ -25,7 +25,7 @@ class StoreIncomeRequest extends FormRequest
     {
         return [
             'user_id' => ['required'],
-            'purchase_day' => ['required', 'date'],
+            'receive_date' => ['required', 'date'],
             'title' => ['required', 'max:20'],
             'price' => ['required', 'numeric'],
             'memo' => ['max:255'],

@@ -15,6 +15,7 @@ class ExpensesController extends Controller
     public function index()
     {
         $expenses = Expense::where('user_id', '=', Auth::id())
+            ->orderBy('purchase_day')
             ->get();
 
         return Inertia::render('Expenses/Index', [

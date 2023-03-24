@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExpensesController;
+use App\Http\Controllers\IncomesController;
 use Inertia\Inertia;
 
 /*
@@ -18,6 +19,9 @@ use Inertia\Inertia;
 */
 
 Route::resource('expenses', ExpensesController::class)
+    ->middleware(['auth', 'verified']);
+
+Route::resource('incomes', IncomesController::class)
     ->middleware(['auth', 'verified']);
 
 Route::get('/', function () {
