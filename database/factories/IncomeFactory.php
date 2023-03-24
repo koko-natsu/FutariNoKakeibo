@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Expense>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Income>
  */
-class ExpenseFactory extends Factory
+class IncomeFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,7 +19,7 @@ class ExpenseFactory extends Factory
     {
         return [
             'user_id' => rand(1, User::count()),
-            'purchase_day' => $this->faker->dateTimeThisYear(),
+            'receive_date' => $this->faker->dateTimeThisYear(),
             'title' => $this->faker->word(),
             'price' => $this->faker->randomNumber(5, false),
             'memo'  => $this->faker->sentence(),

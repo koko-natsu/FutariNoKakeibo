@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Expense;
+use App\Models\Income;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
         ]);
         User::factory(10)->create();
-        Expense::factory(50)->create();
+        Expense::factory(100)->create();
+        Income::factory(100)->create();
     }
 }
