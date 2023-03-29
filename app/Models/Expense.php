@@ -11,15 +11,15 @@ class Expense extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
         'purchase_day',
         'title',
         'price',
         'memo',
     ];
 
-    public function isAuth($request)
+    public function user()
     {
-        return $request->user_id == Auth::id();
+        return $this->belongsTo(User::class);
     }
+
 }

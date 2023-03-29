@@ -24,7 +24,6 @@ class StoreExpenseRequest extends FormRequest
     public function rules()
     {
         return [
-        'user_id' => ['required'],
         'purchase_day' => ['required', 'date'],
         'title' => ['required', 'max:20'],
         'price' => ['required', 'numeric'],

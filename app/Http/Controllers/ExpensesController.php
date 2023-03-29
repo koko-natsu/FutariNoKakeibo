@@ -3,18 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Expense;
+use App\Models\User;
 use Inertia\Inertia;
+use Inertia\Response;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreExpenseRequest;
 use App\Http\Requests\UpdateExpenseRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+
 
 class ExpensesController extends Controller
 {
-
-    public function index()
+    public function index(): Response
     {
-        $expenses = Expense::where('user_id', '=', Auth::id())
+        $expenses = User::find($this->auth_user()->id)
+            ->expenses()
             ->orderBy('purchase_day')
             ->get();
 
@@ -24,56 +27,53 @@ class ExpensesController extends Controller
     }
 
 
-    public function create()
+    public function create(): Response
     {
-        return Inertia::render('Expenses/Create', [
-            'user_id' => Auth::id(),
-        ]);
+        return Inertia::render('Expenses/Create');
     }
 
 
-    public function store(StoreExpenseRequest $request, Expense $expense)
+    public function store(StoreExpenseRequest $request, Expense $expense): RedirectResponse
     {
-        if($expense->isAuth($request))
-        {
-            $expense->fill($request->all())->save();
-        }
+        $request->user()
+            ->expenses()
+            ->create($request->all())
+            ->save();
 
         return to_route('expenses.index');
     }
 
 
-    public function show(Expense $expense)
+    public function show(Expense $expense): Response
     {
-        if($expense->user_id == Auth::id()) {
-            return Inertia::render('Expenses/Show', [
-                'expense' => $expense,
-            ]);
-        } else {
-            return to_route('expenses.index');
-        }
+        $this->authorize('show', $expense);
+        return Inertia::render('Expenses/Show', [
+            'expense' => $expense,
+        ]);
     }
 
 
     public function edit(Expense $expense)
     {
-        //
+        $this->authorize('edit', $expense);
+        return Inertia::render('Expenses/Edit', [
+            'expense' => $expense,
+        ]);
     }
 
 
-    public function update(UpdateExpenseRequest $request, Expense $expense)
+    public function update(UpdateExpenseRequest $request, Expense $expense): RedirectResponse
     {
-        if($expense->isAuth($request))
-        {
-            $expense->fill($request->all())->save();
-        }
+        $this->authorize('update', $expense);
+        $expense->update($request->all());
 
         return to_route('expenses.index');
     }
 
 
-    public function destroy(Expense $expense)
+    public function destroy(Expense $expense): RedirectResponse
     {
+        $this->authorize('delete', $expense);
         $expense->delete();
 
         return to_route('expenses.index');

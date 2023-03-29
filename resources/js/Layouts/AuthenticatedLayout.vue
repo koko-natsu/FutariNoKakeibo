@@ -14,10 +14,10 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <div>
-        <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white border-b border-gray-100">
+        <div class="min-h-screen bg-whites">
+            <nav class="mt-5">
                 <!-- Primary Navigation Menu -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-gray-200 rounded-full max-w-8xl mx-10 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
@@ -36,7 +36,7 @@ const showingNavigationDropdown = ref(false);
                                         <template #trigger>
                                             <button
                                                 type="button"
-                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-amber-400 focus:outline-none transition ease-in-out duration-150"
+                                                class="bg-gray-100 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium text-gray-500 hover:text-gray-800"
                                             >
                                             支出
                                             </button>
@@ -53,7 +53,7 @@ const showingNavigationDropdown = ref(false);
                                         <template #trigger>
                                             <button
                                                 type="button"
-                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-amber-400 focus:outline-none transition ease-in-out duration-150"
+                                                class="bg-gray-100 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium text-gray-500 hover:text-gray-900"
                                             >
                                             収入
                                             </button>
@@ -180,7 +180,7 @@ const showingNavigationDropdown = ref(false);
             </header> -->
 
             <!-- Page Content -->
-            <main>
+            <main class="bg-white">
                 <slot />
             </main>
             <Footer />

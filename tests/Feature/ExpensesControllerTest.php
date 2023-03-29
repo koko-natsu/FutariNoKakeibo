@@ -108,6 +108,27 @@ class ExpensesControllerTest extends TestCase
     }
 
     /**
+     * Show
+     */
+    function testGetShowpage()
+    {
+        $expense = Expense::where('user_id', '=', 1)
+            ->first();
+
+        $this->get("expenses/{$expense->id}")
+            ->assertOk();
+    }
+
+    /**
+     * Update
+     */
+    function testVerficationOfValidDataInUpdate()
+    {
+        
+    }
+
+
+    /**
      * UnLoggedInUserの検証
      */
     function testVerficationOfUnLoggedInUsers()
@@ -136,5 +157,14 @@ class ExpensesControllerTest extends TestCase
         $response->assertStatus(302);
         $response->assertRedirect('login');
         $this->assertDatabaseCount('expenses', 100);
+        
+        //Show
+        $expense = Expense::where('user_id', '=', 1)
+            ->first();
+            
+        $this->get("expenses/{$expense->id}")
+            ->assertRedirect('login');
+
+        
     }
 }

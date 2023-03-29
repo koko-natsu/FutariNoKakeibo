@@ -1,12 +1,13 @@
 import './bootstrap';
 import '../css/app.css';
-
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';/* import the fontawesome core */
+import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+/* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEraser, faTrashCan, faUserSecret } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faClipboard } from '@fortawesome/free-regular-svg-icons'
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
@@ -25,15 +26,8 @@ createInertiaApp({
 });
 
 /* add icons to the library */
-library.add(faEraser)
-/* add font awesome icon component */
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+library.add(faPlus, faClipboard)
 
-Vue.config.productionTip = false
-
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  components: { App },
-  template: '<App/>'
-})
+// createApp(App)
+// .component('font-awesome-icon', FontAwesomeIcon)
+// .mount('#app')
