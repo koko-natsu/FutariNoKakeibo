@@ -18,6 +18,11 @@ class Income extends Model
         'memo',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function isAuth($request)
     {
         return $request->user_id == Auth::id();

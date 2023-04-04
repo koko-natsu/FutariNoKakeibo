@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('families', function (Blueprint $table) {
-            $table->id();
-            $table->string('family_name');
-            $table->integer('household_head')
-                ->unique();
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('family_id')
+                ->constrained();
         });
     }
 
@@ -29,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('families');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };

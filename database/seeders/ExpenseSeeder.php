@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Income;
+use App\Models\Expense;
 
-class IncomeSeeder extends Seeder
+class ExpenseSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +15,7 @@ class IncomeSeeder extends Seeder
      */
     public function run()
     {
-        Income::factory()
+        Expense::factory()
             ->count(100)
             ->state(['user_id' => 1])
             ->create();

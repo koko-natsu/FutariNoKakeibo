@@ -1,18 +1,18 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import InputError from '@/Components/InputError.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import { getToday } from "@/gettoday"
 import { reactive, onMounted } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 
 const props = defineProps({
-  'user_id': Number,
+  // 'user_id': Number,
   'errors': Object,
 })
 
-const form = reactive({
-  user_id: props.user_id,
+const form = useForm({
+  // // user_id: props.user_id,
   receive_date: '',
   title: '',
   price: '',
@@ -22,10 +22,6 @@ const form = reactive({
 onMounted(() => {
   form.receive_date = getToday();
 })
-
-const storeExpense = () => {
-  Inertia.post('/incomes', form)
-}
 
 </script>
 
@@ -37,7 +33,7 @@ const storeExpense = () => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                   <section class="text-gray-600 body-font relative">
-                    <form @submit.prevent="storeExpense">
+                    <form @submit.prevent="form.post(route('incomes.store'), { onSuccess: () => form.reset() })">
                         <div class="container px-5 py-10 mx-auto flex sm:flex-nowrap flex-wrap">
                           <div class="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto md:mr-auto w-full md:py-8 mt-8 md:mt-0">
                             <h2 class="text-gray-900 text-lg mb-1 font-medium title-font">新しい収入がありますか?</h2>

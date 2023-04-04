@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\IncomesController;
+use App\Http\Controllers\FamilyController;
 use Inertia\Inertia;
 
 /*
@@ -22,6 +23,9 @@ Route::resource('expenses', ExpensesController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('incomes', IncomesController::class)
+    ->middleware(['auth', 'verified']);
+
+Route::resource('families', FamilyController::class)
     ->middleware(['auth', 'verified']);
 
 Route::get('/', function () {

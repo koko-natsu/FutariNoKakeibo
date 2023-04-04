@@ -10,13 +10,6 @@ const props = defineProps({
   'errors': Object,
 })
 
-// const form = reactive({
-//   purchase_day: '',
-//   title: '',
-//   price: '',
-//   memo:  null,
-// })
-
 const form = useForm({
   purchase_day: '',
   title: '',
@@ -28,9 +21,6 @@ onMounted(() => {
   form.purchase_day = getToday();
 })
 
-// const storeExpense = () => {
-//   Inertia.post('/expenses', form)
-// }
 
 </script>
 

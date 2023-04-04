@@ -3,16 +3,28 @@ import { defineProps, onMounted } from 'vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { Inertia } from '@inertiajs/inertia';
 
 defineProps({
   balance: Object,
   word: String,
 })
 
+const deleteItem = (id, word) => {
+    if(word == 'incomes') {
+        Inertia.delete(route('incomes.destroy', { income: id}), {
+            onBefore: () => confirm('本当に削除しますか？')
+        })
+    } else {
+        Inertia.delete(route('expenses.destroy', { expense: id}), {
+            onBefore: () => confirm('本当に削除しますか？')
+        })
+    }
+}
 </script>
 
 <template>
-<div class="p-2 flex space-x-2">
+<div class="p-2">
   <div class="flex-1">
       <div class="relative flex justify-between items-center">
           <div class="max-w-xs truncate">
@@ -37,17 +49,17 @@ defineProps({
                       <DropdownLink as="button" :href="route('expenses.edit', balance.id)" method="get">
                           Edit
                       </DropdownLink>
-                      <DropdownLink as="button" :href="route('expenses.destroy', balance.id)" method="delete">
-                          Delete
-                      </DropdownLink>
+                      <button @click="deleteItem(balance.id, word)" class="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">
+                        Delete
+                      </button>
                     </div>
                     <div v-if="word == 'incomes'">
                       <DropdownLink as="button" :href="route('incomes.edit', balance.id)" method="get">
                           Edit
                       </DropdownLink>
-                      <DropdownLink as="button" :href="route('incomes.destroy', balance.id)" method="delete">
-                          Delete
-                      </DropdownLink>
+                      <button @click="deleteItem(balance.id, word)" class="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">
+                        Delete
+                      </button>
                     </div>
                   </template>
               </Dropdown>

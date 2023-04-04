@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Family;
 
 class UserSeeder extends Seeder
 {
@@ -20,6 +21,8 @@ class UserSeeder extends Seeder
             'name' => 'test',
             'email' => 'test@test.com',
             'password' => Hash::make('1234'),
+            'created_at' => now(),
+            'family_id' => 1,
         ]);
     }
 }

@@ -16,10 +16,15 @@ class ExpensesController extends Controller
 {
     public function index(): Response
     {
-        $expenses = User::find($this->auth_user()->id)
-            ->expenses()
-            ->orderBy('purchase_day')
-            ->get();
+        // $expenses = User::find($this->auth_user()->id)
+        //     ->expenses()
+        //     ->orderBy('purchase_day')
+        //     ->get();
+
+        $expenses = Expense::where('user_id', '=', $this->auth_user()->id)
+        ->whereMonth('purchase_day', '01')
+        ->orderby('purchase_day')
+        ->get();
 
         return Inertia::render('Expenses/Index', [
             'expenses' => $expenses,
@@ -71,7 +76,7 @@ class ExpensesController extends Controller
     }
 
 
-    public function destroy(Expense $expense): RedirectResponse
+    public function destroy(Expense $expense)
     {
         $this->authorize('delete', $expense);
         $expense->delete();
