@@ -20,7 +20,7 @@ class ExpenseFactory extends Factory
         return [
             'user_id' => rand(1, User::count()),
             'purchase_day' => $this->faker->dateTimeThisYear(),
-            'title' => $this->faker->word(),
+            'title' => $this->faker->company(),
             'price' => $this->faker->randomNumber(5, false),
             'memo'  => $this->faker->sentence(),
             'created_at' =>  $this->faker->dateTimeThisYear(),

@@ -24,5 +24,6 @@ class UserSeeder extends Seeder
             'created_at' => now(),
             'family_id' => 1,
         ]);
+        
     }
 }

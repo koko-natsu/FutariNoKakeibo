@@ -18,7 +18,7 @@ class FamilyController extends Controller
      */
     public function index()
     {
-        
+
         $family_users = User::select('id', 'name')
             ->where('family_id', '=', $this->auth_user()->family_id)
             ->with('expenses')
@@ -34,7 +34,7 @@ class FamilyController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Families/Create');
     }
 
     /**
