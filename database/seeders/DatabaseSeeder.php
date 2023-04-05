@@ -37,6 +37,6 @@ class DatabaseSeeder extends Seeder
             ->hasExpenses(100)
             ->hasIncomes(100)
             ->create();
+            
         }
-        
     }

@@ -6,6 +6,7 @@ use App\Models\Expense;
 use App\Models\User;
 use Inertia\Inertia;
 use Inertia\Response;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreExpenseRequest;
@@ -16,15 +17,12 @@ class ExpensesController extends Controller
 {
     public function index(): Response
     {
-        // $expenses = User::find($this->auth_user()->id)
-        //     ->expenses()
-        //     ->orderBy('purchase_day')
-        //     ->get();
+        $month = Carbon::now()->month;
 
         $expenses = Expense::where('user_id', '=', $this->auth_user()->id)
-        ->whereMonth('purchase_day', '01')
-        ->orderby('purchase_day')
-        ->get();
+            ->whereMonth('purchase_day', $month)
+            ->orderby('purchase_day')
+            ->get();
 
         return Inertia::render('Expenses/Index', [
             'expenses' => $expenses,

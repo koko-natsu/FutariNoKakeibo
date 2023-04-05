@@ -15,6 +15,8 @@ class Expense extends Model
         'title',
         'price',
         'memo',
+        'status',
+        'share_rate',
     ];
 
     public function user()

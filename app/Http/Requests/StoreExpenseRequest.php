@@ -28,6 +28,8 @@ class StoreExpenseRequest extends FormRequest
         'title' => ['required', 'max:20'],
         'price' => ['required', 'numeric'],
         'memo' => ['max:255'],
+        'status' => ['required', 'boolean'],
+        'share_rate' => ['numeric'],
         ];
     }
 }
