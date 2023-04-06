@@ -4,9 +4,11 @@ import { ref, computed } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
 import BalanceTable from '@/Components/BalanceTable.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { Inertia } from '@inertiajs/inertia';
 
 const props = defineProps({
     'expenses': Array,
+    'date': String,
 })
 
 const sumPrice = computed(() => {
@@ -16,6 +18,17 @@ const sumPrice = computed(() => {
     })
     return total
 })
+
+
+const date = ref(new Date(props.date));
+
+const moveMonth = num => {
+    const temp = new Date(date.value.setMonth(date.value.getMonth() + num))
+    const yyyy = temp.getFullYear();
+    const mm   = temp.getMonth() + 1;
+    Inertia.get(route('expenses.index'), {year: yyyy, month: mm});
+}
+
 
 
 </script>
@@ -36,12 +49,20 @@ const sumPrice = computed(() => {
                                 <font-awesome-icon :icon="['fas', 'plus']" size="xl"/>
                             </Link>
                         </div>
+                        <div class="flex justify-between w-full max-h-96 px-5">
+                            <button @click="moveMonth(-1)">
+                                <font-awesome-icon :icon="['fas', 'caret-left']" />
+                            </button>
+                            <button @click="moveMonth(1)">
+                                <font-awesome-icon :icon="['fas', 'caret-right']" />
+                            </button>
+                        </div>
                         <div class="w-full max-h-96 mt-5 rounded-lg divide-y box-border border-2 border-gray-800 overflow-y-auto">
                             <BalanceTable
-                            v-for="expense in expenses"
-                            :key="expense.id"
-                            :balance="expense"
-                            word="expenses" />
+                                v-for="expense in expenses"
+                                :key="expense.id"
+                                :balance="expense"
+                                word="expenses" />
                         </div>
                         <div class="w-full mt-5 p-2 rounded-lg box-border border-2 border-gray-800">
                             <div class="flex justify-between mr-10 text-lg text-gray-900">

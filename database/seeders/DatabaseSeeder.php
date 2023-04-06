@@ -34,8 +34,8 @@ class DatabaseSeeder extends Seeder
 
         User::factory()
             ->count(50)
-            ->hasExpenses(100)
-            ->hasIncomes(100)
+            ->hasExpenses(500)
+            ->hasIncomes(500)
             ->create();
             
         }
