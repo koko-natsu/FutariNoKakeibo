@@ -14,10 +14,10 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <div>
-        <div class="min-h-screen bg-whites">
-            <nav class="mt-5">
+        <div class="min-h-screen bg-yellow-50">
+            <nav class="pt-4">
                 <!-- Primary Navigation Menu -->
-                <div class="bg-gray-200 rounded-full max-w-8xl mx-10 sm:px-6 lg:px-8">
+                <div class="rounded-full max-w-8xl mx-10 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
@@ -32,7 +32,7 @@ const showingNavigationDropdown = ref(false);
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink :href="route('expenses.index')" :active="route().current('expenses.index')">
-                                    Expenses
+                                    <strong>Expenses</strong>
                                 </NavLink>
                                 <NavLink :href="route('incomes.index')" :active="route().current('incomes.index')">
                                     Incomes
@@ -155,7 +155,7 @@ const showingNavigationDropdown = ref(false);
             </header> -->
 
             <!-- Page Content -->
-            <main class="bg-white">
+            <main class="bg-yellow-50">
                 <slot />
             </main>
             <Footer />

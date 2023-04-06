@@ -17,27 +17,20 @@ class ExpensesController extends Controller
 {
     public function index(Request $request) : Response
     {
-        
-        if(!is_null($request->year)) {
-            $year  = $request->year;
-            $month = $request->month;
-        } else {
-            $now = Carbon::now();
-            $year  = $now->year;
-            $month = $now->month;
-        }
- 
+    
+        $now = Carbon::now();
+        $year  = $now->year;
+        $month = $now->month;
+
         $expenses = Expense::where('user_id', '=', $this->auth_user()->id)
             ->whereYear('purchase_day', $year)
             ->whereMonth('purchase_day', $month)
             ->orderby('purchase_day')
             ->get();
 
-        $date = $year.'-'.$month.'-'.'01';
-
         return Inertia::render('Expenses/Index', [
             'expenses' => $expenses,
-            'date' => $date,
+            'date' => $now,
         ]);
     }
 

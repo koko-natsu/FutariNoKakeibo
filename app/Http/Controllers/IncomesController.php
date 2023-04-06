@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Income;
 use App\Http\Requests\StoreIncomeRequest;
 use App\Http\Requests\UpdateIncomeRequest;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Inertia\Response;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class IncomesController extends Controller
 {
@@ -15,14 +18,21 @@ class IncomesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): Response
     {
-        $incomes = Income::where('user_id', '=', Auth::id())
-            ->orderBy('receive_date')
+        $now = Carbon::now();
+        $year  = $now->year;
+        $month = $now->month;
+
+        $incomes = \Auth::user()->incomes()
+            ->whereYear('receive_date', $year)
+            ->whereMonth('receive_date', $month)
+            ->orderby('receive_date')
             ->get();
 
         return Inertia::render('Incomes/Index', [
             'incomes' => $incomes,
+            'date' => $now,
         ]);
     }
 

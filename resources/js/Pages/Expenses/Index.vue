@@ -4,7 +4,6 @@ import { ref, computed, reactive } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
 import BalanceTable from '@/Components/BalanceTable.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { Inertia } from '@inertiajs/inertia';
 import axios from 'axios';
 
 const props = defineProps({
@@ -15,6 +14,7 @@ const props = defineProps({
 const data = reactive({
     'expenses': props.expenses,
     'date': new Date(props.date),
+    'month': (new Date(props.date)).getMonth() + 1,
 });
 
 
@@ -27,6 +27,7 @@ const moveMonth = async (num) => {
         await axios.get(`/api/getExpenses?year=${yyyy}&month=${mm}`)
         .then( res => {
             data.expenses = res.data.expenses
+            data.month    = mm
         })
     } catch {
     }
@@ -39,6 +40,11 @@ const sumPrice = computed(() => {
     })
     return total
 })
+
+const getMonth = computed(() => {
+    let mm = data.month;
+    return mm
+})
 </script>
 
 <template>
@@ -46,36 +52,42 @@ const sumPrice = computed(() => {
 
     <AuthenticatedLayout>
         <section class="text-gray-600 body-font overflow-hidden">
-            <div class="container px-5 py-24 mx-auto">
+            <div class="container px-5 py-12 mx-auto">
                 <div class="flex flex-wrap -m-12">
-                    <div class="p-12 md:w-1/2 flex flex-col items-start">
-                        <div class="flex justify-end w-full">
+                    <div class="p-12 w-full md:w-1/2 flex flex-col items-start">
+                        <div class="flex justify-between w-full">
+                            <h2 class="ml-5 py-2 sm:text-xl text-2xl title-font font-medium text-gray-900">{{ getMonth }}月のお支払い</h2>
                             <Link 
                                 as="button"
                                 :href="route('expenses.create')"
-                                class="block">
-                                <font-awesome-icon :icon="['fas', 'plus']" size="xl"/>
+                                id="newButton"
+                                class="font-mono text-gray-500 hover:text-gray-700 bg-yellow-400 t-5 px-10 py-2 rounded-lg hover:drop-shadow-lg ">
+                                <strong>new</strong>
                             </Link>
                         </div>
-                        <div class="flex justify-between w-full max-h-96 px-5">
-                            <button @click="moveMonth(-1)">
-                                <font-awesome-icon class="hover:text-gray-300" :icon="['fas', 'caret-left']" size="xl" />
-                            </button>
-                            <button @click="moveMonth(1)">
-                                <font-awesome-icon class="hover:text-gray-300" :icon="['fas', 'caret-right']" size="xl" />
-                            </button>
+                        <div class="flex justify-end w-full px-5 mt-4">
+                            <div>
+                                <button @click="moveMonth(-1)">
+                                    <font-awesome-icon class="mr-2 hover:text-gray-300" :icon="['fas', 'caret-left']" size="xl" />
+                                </button>
+                                <button @click="moveMonth(1)">
+                                    <font-awesome-icon class="hover:text-gray-300" :icon="['fas', 'caret-right']" size="xl" />
+                                </button>
+                            </div>
                         </div>
-                        <div class="w-full max-h-96 mt-5 rounded-lg divide-y box-border border-2 border-gray-800 overflow-y-auto">
+                        <div id="scrollbar" class="bg-white box-border border-3 w-full max-h-96 mt-5 rounded-lg divide-y overflow-y-auto drop-shadow-lg">
                             <BalanceTable
                                 v-for="expense in data.expenses"
                                 :key="expense.id"
                                 :balance="expense"
                                 word="expenses" />
                         </div>
-                        <div class="w-full mt-5 p-2 rounded-lg box-border border-2 border-gray-800">
-                            <div class="flex justify-between mr-10 text-lg text-gray-900">
-                                <strong>total</strong>
-                                <strong>{{ sumPrice.toLocaleString() }}</strong> 
+                        <div class="flex justify-end w-full">
+                            <div class="bg-white w-full md:w-1/2 mt-5 p-2 rounded-lg box-border border-2 drop-shadow-lg">
+                                <div class="flex justify-between mr-10 text-lg text-gray-900">
+                                    <strong class="font-mono ml-2">total</strong>
+                                    <strong class="font-mono">{{ sumPrice.toLocaleString() }} 円</strong>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -115,3 +127,20 @@ const sumPrice = computed(() => {
         </section>
     </AuthenticatedLayout>
 </template>
+
+<style>
+#scrollbar::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+#scrollbar::-webkit-scrollbar-track {
+ border-radius: 5px;
+ background: rgba(110, 108, 108, 0.2);
+}
+
+#scrollbar::-webkit-scrollbar-thumb {
+ border-radius: 10px;
+ background: rgb(255, 217, 102);
+}
+</style>

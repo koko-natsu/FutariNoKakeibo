@@ -41,8 +41,6 @@ class Expense extends Model
             ->orderby('purchase_day')
             ->get();
 
-        $date = $year.'-'.$month.'-'.'01';
-
         return response()->json([
             'expenses' => $expenses,
         ]);
