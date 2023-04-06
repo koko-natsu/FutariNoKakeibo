@@ -1,36 +1,44 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { ref, computed } from 'vue';
+import { ref, computed, reactive } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
 import BalanceTable from '@/Components/BalanceTable.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { Inertia } from '@inertiajs/inertia';
+import axios from 'axios';
 
 const props = defineProps({
     'expenses': Array,
     'date': String,
 })
 
+const data = reactive({
+    'expenses': props.expenses,
+    'date': new Date(props.date),
+});
+
+
+const moveMonth = async (num) => {
+    const temp = new Date(data.date.setMonth(data.date.getMonth() + num))
+    const yyyy = temp.getFullYear();
+    const mm   = temp.getMonth() + 1;
+    
+    try {
+        await axios.get(`/api/getExpenses?year=${yyyy}&month=${mm}`)
+        .then( res => {
+            data.expenses = res.data.expenses
+        })
+    } catch {
+    }
+}
+
 const sumPrice = computed(() => {
     let total = 0
-    props.expenses.forEach( expense => {
+    data.expenses.forEach( expense => {
         total += expense.price
     })
     return total
 })
-
-
-const date = ref(new Date(props.date));
-
-const moveMonth = num => {
-    const temp = new Date(date.value.setMonth(date.value.getMonth() + num))
-    const yyyy = temp.getFullYear();
-    const mm   = temp.getMonth() + 1;
-    Inertia.get(route('expenses.index'), {year: yyyy, month: mm});
-}
-
-
-
 </script>
 
 <template>
@@ -51,15 +59,15 @@ const moveMonth = num => {
                         </div>
                         <div class="flex justify-between w-full max-h-96 px-5">
                             <button @click="moveMonth(-1)">
-                                <font-awesome-icon :icon="['fas', 'caret-left']" />
+                                <font-awesome-icon class="hover:text-gray-300" :icon="['fas', 'caret-left']" size="xl" />
                             </button>
                             <button @click="moveMonth(1)">
-                                <font-awesome-icon :icon="['fas', 'caret-right']" />
+                                <font-awesome-icon class="hover:text-gray-300" :icon="['fas', 'caret-right']" size="xl" />
                             </button>
                         </div>
                         <div class="w-full max-h-96 mt-5 rounded-lg divide-y box-border border-2 border-gray-800 overflow-y-auto">
                             <BalanceTable
-                                v-for="expense in expenses"
+                                v-for="expense in data.expenses"
                                 :key="expense.id"
                                 :balance="expense"
                                 word="expenses" />
