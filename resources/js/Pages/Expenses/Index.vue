@@ -42,8 +42,7 @@ const sumPrice = computed(() => {
 })
 
 const getMonth = computed(() => {
-    let mm = data.month;
-    return mm
+    return data.month;
 })
 </script>
 
@@ -65,7 +64,18 @@ const getMonth = computed(() => {
                                 <strong>new</strong>
                             </Link>
                         </div>
-                        <div class="flex justify-end w-full px-5 mt-4">
+                        <div class="flex justify-between w-full px-5 mt-4">
+                            <div>
+                                <button class="ml-5">
+                                    Date
+                                    <font-awesome-icon class="mr-2 hover:text-gray-300" :icon="['fas', 'caret-up']" size="xl" />
+                                </button>
+                                <button class="ml-5">
+                                    Price
+                                    <font-awesome-icon class="mr-2 hover:text-gray-300" :icon="['fas', 'caret-down']" size="xl" />
+                                </button>
+                                
+                            </div>
                             <div>
                                 <button @click="moveMonth(-1)">
                                     <font-awesome-icon class="mr-2 hover:text-gray-300" :icon="['fas', 'caret-left']" size="xl" />
@@ -124,9 +134,14 @@ const getMonth = computed(() => {
                     </div>
                 </div>
             </div>
-        </section>
+            <svg class="bg-[#FFD966]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 152">
+                <path fill="#fefce8" fill-opacity="1" d="M0,96L30,112C60,128,120,160,180,149.3C240,139,300,85,360,69.3C420,53,480,75,540,74.7C600,75,660,53,720,42.7C780,32,840,32,900,48C960,64,1020,96,1080,101.3C1140,107,1200,85,1260,80C1320,75,1380,85,1410,90.7L1440,96L1440,0L1410,0C1380,0,1320,0,1260,0C1200,0,1140,0,1080,0C1020,0,960,0,900,0C840,0,780,0,720,0C660,0,600,0,540,0C480,0,420,0,360,0C300,0,240,0,180,0C120,0,60,0,30,0L0,0Z" />
+            </svg>
+            </section>
+        
     </AuthenticatedLayout>
 </template>
+
 
 <style>
 #scrollbar::-webkit-scrollbar {

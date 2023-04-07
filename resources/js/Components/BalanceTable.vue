@@ -27,11 +27,11 @@ const deleteItem = (id, word) => {
 <div class="p-2">
   <div class="flex-1">
       <div class="relative flex justify-between items-center">
-          <div class="max-w-xs truncate">
+          <div class="font-mono max-w-xs truncate">
               <small v-if="word == 'expenses'" class="ml-2 text-gray-800 text-sm">{{ balance.purchase_day }}</small>
               <small v-else class="ml-2 text-gray-800 text-sm">{{ balance.receive_date }}</small>
               <span class="ml-5 inline-block py-1 px-2 rounded bg-indigo-50 text-indigo-500 text-xs font-medium tracking-widest">CATEGORY</span>
-              <div class="ml-3 text-gray-900">{{ balance.title }}</div>
+              <div class="mt-1 ml-3 text-gray-900">{{ balance.title }}</div>
           </div>
           <div class="truncate">
               <strong class="mr-10 text-lg text-gray-900">{{ balance.price.toLocaleString() }}</strong>

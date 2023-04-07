@@ -6,7 +6,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPlus, faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faCaretLeft, faCaretRight  ,faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import { faClipboard } from '@fortawesome/free-regular-svg-icons'
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
@@ -26,7 +26,7 @@ createInertiaApp({
 });
 
 /* add icons to the library */
-library.add(faPlus, faClipboard, faCaretLeft, faCaretRight)
+library.add(faPlus, faClipboard, faCaretLeft, faCaretRight, faCaretUp, faCaretDown)
 
 // createApp(App)
 // .component('font-awesome-icon', FontAwesomeIcon)
