@@ -53,7 +53,7 @@ class IncomePolicy
      */
     public function update(User $user, Income $income)
     {
-        //
+        return $income->user()->is($user);
     }
 
     /**
@@ -65,7 +65,7 @@ class IncomePolicy
      */
     public function delete(User $user, Income $income)
     {
-        //
+        return $income->user()->is($user);
     }
 
     /**

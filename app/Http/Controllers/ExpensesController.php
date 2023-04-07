@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Expense;
-use App\Models\User;
 use Inertia\Inertia;
 use Inertia\Response;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreExpenseRequest;
@@ -15,7 +14,7 @@ use App\Http\Requests\UpdateExpenseRequest;
 
 class ExpensesController extends Controller
 {
-    public function index(Request $request) : Response
+    public function index() : Response
     {
     
         $now = Carbon::now();
@@ -43,25 +42,24 @@ class ExpensesController extends Controller
 
     public function store(StoreExpenseRequest $request, Expense $expense): RedirectResponse
     {
-        $request->user()
-            ->expenses()
-            ->create($request->all())
-            ->save();
+        if($request->user()->is(\Auth::user())) {
+            $expense->fill($request->all())->save();
+        }
 
         return to_route('expenses.index');
     }
 
 
-    public function show(Expense $expense): Response
+    public function show(Expense $expense)
     {
-        $this->authorize('show', $expense);
-        return Inertia::render('Expenses/Show', [
-            'expense' => $expense,
-        ]);
+        // $this->authorize('show', $expense);
+        // return Inertia::render('Expenses/Show', [
+        //     'expense' => $expense,
+        // ]);
     }
 
 
-    public function edit(Expense $expense)
+    public function edit(Expense $expense): Response
     {
         $this->authorize('edit', $expense);
         return Inertia::render('Expenses/Edit', [
@@ -79,7 +77,7 @@ class ExpensesController extends Controller
     }
 
 
-    public function destroy(Expense $expense)
+    public function destroy(Expense $expense): RedirectResponse
     {
         $this->authorize('delete', $expense);
         $expense->delete();

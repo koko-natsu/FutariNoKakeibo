@@ -16,7 +16,7 @@ class IncomeSeeder extends Seeder
     public function run()
     {
         Income::factory()
-            ->count(100)
+            ->count(50)
             ->state(['user_id' => 1])
             ->create();
     }

@@ -29,9 +29,9 @@ class ExpensePolicy
      * @param  \App\Models\Expense  $expense
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Expense $expense)
+    public function store(User $user, Expense $expense)
     {
-        //
+        return $expense->user()->is($user);
     }
 
     /**

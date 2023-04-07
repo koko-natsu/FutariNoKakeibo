@@ -16,7 +16,7 @@ class ExpenseSeeder extends Seeder
     public function run()
     {
         Expense::factory()
-            ->count(100)
+            ->count(300)
             ->state(['user_id' => 1])
             ->create();
     }

@@ -60,6 +60,8 @@ class ExpensesControllerTest extends TestCase
             'title' => 'test',
             'price' => 20000,
             'memo'  => 'testdayo',
+            'status' => 1,
+            'share_rate' => 100,
         ]);
 
         $response->assertSessionHasNoErrors();

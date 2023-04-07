@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
 
 class Income extends Model
 {
@@ -18,13 +19,29 @@ class Income extends Model
         'memo',
     ];
 
-    public function user()
+    public function user(): relation
     {
         return $this->belongsTo(User::class);
     }
 
-    public function isAuth($request)
+    /**
+     * FIXME: getExpenseと同じ処理なので、共通化が必要
+     */
+    public function scopeGetIncomes($query, $request): JsonResponse
     {
-        return $request->user_id == Auth::id();
+        if(!is_null($request->year)) {
+            $year  = $request->year;
+            $month = $request->month;
+        }
+ 
+        $incomes = Income::where('user_id', '=', \Auth::user()->id)
+            ->whereYear('receive_date', $year)
+            ->whereMonth('receive_date', $month)
+            ->orderby('receive_date')
+            ->get();
+
+        return response()->json([
+            'incomes' => $incomes,
+        ]);
     }
 }

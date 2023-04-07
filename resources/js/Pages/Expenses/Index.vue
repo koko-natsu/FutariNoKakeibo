@@ -94,7 +94,7 @@ const getMonth = computed(() => {
                         </div>
                         <div class="flex justify-end w-full">
                             <div class="bg-white w-full md:w-1/2 mt-5 p-2 rounded-lg box-border border-2 drop-shadow-lg">
-                                <div class="flex justify-between mr-10 text-lg text-gray-900">
+                                <div class="flex justify-between mr-5 text-lg text-gray-900">
                                     <strong class="font-mono ml-2">total</strong>
                                     <strong class="font-mono">{{ sumPrice.toLocaleString() }} 円</strong>
                                 </div>

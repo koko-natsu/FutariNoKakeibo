@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Expense;
+use App\Models\Income;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,11 @@ use App\Models\Expense;
 Route::middleware('auth:sanctum')
     ->get('/getExpenses', function (Request $request) {
     return Expense::getExpenses($request);
+});
+
+Route::middleware('auth:sanctum')
+    ->get('/getIncomes', function (Request $request) {
+    return Income::getIncomes($request);
 });
 
 

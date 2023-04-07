@@ -19,7 +19,7 @@ class IncomeFactory extends Factory
     {
         return [
             'user_id' => rand(1, User::count()),
-            'receive_date' => $this->faker->dateTimeThisYear(),
+            'receive_date' => $this->faker->dateTimeThisYear('+1 years'),
             'title' => $this->faker->word(),
             'price' => $this->faker->randomNumber(5, false),
             'memo'  => $this->faker->sentence(),

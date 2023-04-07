@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 
 class Expense extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'purchase_day',
         'title',
         'price',
@@ -22,13 +24,15 @@ class Expense extends Model
     ];
 
 
-    public function user()
+    public function user(): relation
     {
         return $this->belongsTo(User::class);
     }
 
-
-    public function scopeGetExpenses($query, $request)
+     /**
+     * FIXME: getIncomesと同じ処理なので、共通化が必要
+     */
+    public function scopeGetExpenses($query, $request): JsonResponse
     {
         if(!is_null($request->year)) {
             $year  = $request->year;

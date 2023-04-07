@@ -41,11 +41,9 @@ class IncomesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): Response
     {
-        return Inertia::render('Incomes/Create', [
-            'user_id' => Auth::id(),
-        ]);
+        return Inertia::render('Incomes/Create');
     }
 
     /**
@@ -54,10 +52,9 @@ class IncomesController extends Controller
      * @param  \App\Http\Requests\StoreIncomeRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreIncomeRequest $request, Income $income)
+    public function store(StoreIncomeRequest $request, Income $income): RedirectResponse
     {
-        if($income->isAuth($request))
-        {
+        if($request->user()->is(\Auth::user())) {
             $income->fill($request->all())->save();
         }
 
@@ -81,7 +78,7 @@ class IncomesController extends Controller
      * @param  \App\Models\Income  $income
      * @return \Illuminate\Http\Response
      */
-    public function edit(Income $income)
+    public function edit(Income $income): Response
     {
         return Inertia::render('Incomes/Edit', [
             'income' => $income,
@@ -95,12 +92,10 @@ class IncomesController extends Controller
      * @param  \App\Models\Income  $income
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateIncomeRequest $request, Income $income)
+    public function update(UpdateIncomeRequest $request, Income $income): RedirectResponse
     {
-        if($income->isAuth($request))
-        {
-            $income->fill($request->all())->save();
-        }
+        $this->authorize('update', $income);
+        $income->update($request->all());
 
         return to_route('incomes.index');
     }
@@ -111,8 +106,9 @@ class IncomesController extends Controller
      * @param  \App\Models\Income  $income
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Income $income)
+    public function destroy(Income $income): RedirectResponse
     {
+        $this->authorize('delete', $income);
         $income->delete();
 
         return to_route('incomes.index');
